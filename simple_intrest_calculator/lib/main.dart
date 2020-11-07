@@ -134,8 +134,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       textColor: Theme.of(context).primaryColor,
                       child: Text('Calculate'),
                       onPressed: (){
-                        //_amount = _calculateReturns();
-                        print('pressed');
+                        setState(() {
+                          _amount = _calculateReturns();
+                        });
                       },
                     ),
                   ),
@@ -146,7 +147,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       textColor: Theme.of(context).primaryColorLight,
                       child: Text('Clear', style: TextStyle(fontSize: 20,),),
                       onPressed: (){
-                        debugPrint('pressed');
+                        setState(() {
+                          _clear();
+                        });
                       },
                     ),
                   ),
@@ -163,13 +166,21 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  void _clear(){
+    principalCntr.text = '';
+    roiCntr.text = '';
+    termCntr.text = '';
+    _amount = '0';
+    _selected = _currencies[0];
+  }
+
   String _calculateReturns(){
     double principal = double.parse(principalCntr.text);
     double roi = double.parse(roiCntr.text);
     double year = double.parse(termCntr.text);
 
     double sI = principal + (principal*roi*year)/100;
-    String res = 'After $year years, you get $sI';
+    String res = 'After $year years, you get $sI $_selected';
     return res;
   }
 
